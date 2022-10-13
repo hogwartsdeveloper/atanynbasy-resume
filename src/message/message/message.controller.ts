@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { IMessage } from '../types/message.type';
 import { MessageService } from './message.service';
 
