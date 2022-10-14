@@ -1,10 +1,23 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { TelegramService } from 'nestjs-telegram';
 import { MessageDto } from '../dto/message.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { mergeScan } from 'rxjs';
+import { Message } from '../../typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MessageService {
-  constructor(private telegramBotService: TelegramService) {}
+  constructor(
+    @InjectRepository(Message)
+    private readonly messageRepository: Repository<Message>,
+    private telegramBotService: TelegramService,
+  ) {}
+
+  createMessage(messageDto: MessageDto) {
+    const message = this.messageRepository.create(messageDto);
+    return this.messageRepository.save(message);
+  }
 
   sendTelegramMessage(message: MessageDto): Promise<null> {
     return new Promise((resolve, reject) => {
@@ -19,7 +32,7 @@ export class MessageService {
                 .sendMessage({ chat_id: chat.id, text })
                 .subscribe(
                   () => {
-                    reject(new HttpException('sent message', HttpStatus.OK));
+                    resolve(null);
                   },
                   () => {
                     reject(
