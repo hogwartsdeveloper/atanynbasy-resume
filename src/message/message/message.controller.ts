@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   UsePipes,
   ValidationPipe,
@@ -18,8 +21,8 @@ export class MessageController {
   @Get()
   @ApiOperation({ summary: 'get messages' })
   @ApiResponse({ status: 200, description: 'get message' })
-  async getMessage() {
-    return await this.messageService.getMessages();
+  getMessage() {
+    return this.messageService.getMessages();
   }
 
   @Post()
@@ -29,5 +32,12 @@ export class MessageController {
   async setMessage(@Body() messageDto: MessageDto) {
     await this.messageService.sendTelegramMessage(messageDto);
     return this.messageService.createMessage(messageDto);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'delete message' })
+  @ApiResponse({ status: 200, description: 'delete message' })
+  async deleteMessage(@Param('id', ParseIntPipe) id: number) {
+    return await this.messageService.deleteMessage(id);
   }
 }

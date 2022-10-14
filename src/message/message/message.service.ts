@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { TelegramService } from 'nestjs-telegram';
 import { MessageDto } from '../dto/message.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { mergeScan } from 'rxjs';
 import { Message } from '../../typeorm';
 import { Repository } from 'typeorm';
 
@@ -17,6 +16,10 @@ export class MessageService {
   createMessage(messageDto: MessageDto) {
     const message = this.messageRepository.create(messageDto);
     return this.messageRepository.save(message);
+  }
+
+  deleteMessage(id: number) {
+    return this.messageRepository.delete(id);
   }
 
   getMessages(): Promise<Message[]> {
