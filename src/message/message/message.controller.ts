@@ -13,7 +13,9 @@ export class MessageController {
   constructor(private messageService: MessageService) {}
 
   @Post()
-  setMessage(@Body() messageDto: IMessage) {
-    this.messageService.sendTelegramMessage(messageDto);
+  async setMessage(@Body() messageDto: IMessage) {
+    // throw new HttpException('', 400);
+
+    await this.messageService.sendTelegramMessage(messageDto);
   }
 }
