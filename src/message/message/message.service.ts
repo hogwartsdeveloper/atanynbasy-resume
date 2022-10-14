@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { TelegramService } from 'nestjs-telegram';
-import { MessageDto } from './dto/message.dto';
+import { MessageDto } from '../dto/message.dto';
 
 @Injectable()
 export class MessageService {
