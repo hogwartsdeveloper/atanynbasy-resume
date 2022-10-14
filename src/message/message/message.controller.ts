@@ -1,13 +1,17 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { IMessage } from '../types/message.type';
 import { MessageService } from './message.service';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { MessageDto } from './dto/message.dto';
 
+@ApiTags('message')
 @Controller('message')
 export class MessageController {
   constructor(private messageService: MessageService) {}
 
   @Post()
-  async setMessage(@Body() messageDto: IMessage) {
+  @ApiOperation({ summary: 'send message' })
+  @ApiResponse({ status: 200, description: 'send message' })
+  async setMessage(@Body() messageDto: MessageDto) {
     await this.messageService.sendTelegramMessage(messageDto);
   }
 }

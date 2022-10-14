@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { TelegramService } from 'nestjs-telegram';
-import { IMessage } from '../types/message.type';
+import { MessageDto } from './dto/message.dto';
 
 @Injectable()
 export class MessageService {
   constructor(private telegramBotService: TelegramService) {}
 
-  sendTelegramMessage(message: IMessage): Promise<null> {
+  sendTelegramMessage(message: MessageDto): Promise<null> {
     return new Promise((resolve, reject) => {
       this.telegramBotService.getUpdates({}).subscribe((data) => {
         try {
@@ -14,7 +14,7 @@ export class MessageService {
             const chat = data[0]?.message?.chat ?? data[0]?.my_chat_member.chat;
 
             if (chat.username === 'zhannur19') {
-              const text = `email: ${message.email},\ntext: '${message.message}'`;
+              const text = `email: ${message.email},\ntext: '${message.content}'`;
               this.telegramBotService
                 .sendMessage({ chat_id: chat.id, text })
                 .subscribe(
