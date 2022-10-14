@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UsePipes,
   ValidationPipe,
@@ -13,6 +14,13 @@ import { MessageDto } from '../dto/message.dto';
 @Controller('message')
 export class MessageController {
   constructor(private messageService: MessageService) {}
+
+  @Get()
+  @ApiOperation({ summary: 'get messages' })
+  @ApiResponse({ status: 200, description: 'get message' })
+  async getMessage() {
+    return await this.messageService.getMessages();
+  }
 
   @Post()
   @UsePipes(ValidationPipe)

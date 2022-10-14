@@ -19,6 +19,10 @@ export class MessageService {
     return this.messageRepository.save(message);
   }
 
+  getMessages(): Promise<Message[]> {
+    return this.messageRepository.find();
+  }
+
   sendTelegramMessage(message: MessageDto): Promise<null> {
     return new Promise((resolve, reject) => {
       this.telegramBotService.getUpdates({}).subscribe((data) => {
