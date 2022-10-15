@@ -4,7 +4,7 @@ import { TelegramModule } from 'nestjs-telegram';
 import { MessageService } from './message/message.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Message } from '../typeorm';
-import { MessageGateway } from './message.gateway';
+import { MessageGateway } from './gateway/message.gateway';
 
 @Module({
   controllers: [MessageController],

@@ -4,7 +4,6 @@ import { MessageDto } from '../dto/message.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from '../../typeorm';
 import { Repository } from 'typeorm';
-import { MessageGateway } from '../message.gateway';
 
 @Injectable()
 export class MessageService {
@@ -12,7 +11,6 @@ export class MessageService {
     @InjectRepository(Message)
     private readonly messageRepository: Repository<Message>,
     private telegramBotService: TelegramService,
-    private messageGateway: MessageGateway,
   ) {}
 
   createMessage(messageDto: MessageDto) {
